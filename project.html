@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Love ❤️</title>
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<style>
+/* ===== GLOBAL ===== */
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ff5f6d, #ffc371);
+  color: white;
+  text-align: center;
+}
+
+
+/* ===== PASSWORD SCREEN ===== */
+#lockScreen {
+  position: fixed;
+  inset: 0;
+  background: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+#lockScreen input {
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+}
+
+#lockScreen button {
+  margin-top: 15px;
+  padding: 10px 25px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+
+/* ===== FULLSCREEN PROMPT ===== */
+#fullscreenPrompt {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 998;
+}
+
+#fullscreenPrompt button {
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+}
+
+/* ===== MAIN CARD ===== */
+.main {
+  height: 100vh;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  background: rgba(255,255,255,0.15);
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* ===== SLIDESHOW ===== */
+.slideshow {
+  position: relative;
+  height: 250px;
+  margin-bottom: 20px;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1s ease;
+  border-radius: 15px;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+/* ===== BUTTONS ===== */
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+button {
+  padding: 12px 25px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+}
+
+#yesBtn { background: #00e676; }
+#noBtn { background: #ff1744; color: white; }
+
+/* ===== HEARTS ===== */
+.heart {
+  position: absolute;
+  bottom: -10px;
+  font-size: 20px;
+  animation: float 6s linear infinite;
+}
+
+@keyframes float {
+  to { transform: translateY(-100vh); opacity: 0; }
+}
+
+/* ===== FIREWORK ===== */
+.firework {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: explode 1s forwards;
+}
+
+@keyframes explode {
+  to { transform: scale(15); opacity: 0; }
+}
+/* ===== CONFETTI ===== */
+.confetti {
+  position: fixed;
+  width: 8px;
+  height: 12px;
+  top: -10px;
+  animation: fall 3s linear forwards;
+  z-index: 9999;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* ===== HAPPY PULSE ===== */
+.happy {
+  animation: happyPulse 1.2s ease infinite alternate;
+}
+
+@keyframes happyPulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+/* ===== HEART EXPLOSION ===== */
+.explode-heart {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  font-size: 22px;
+  transform: translate(-50%, -50%);
+  animation: explodeHeart 1.8s ease-out forwards;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+@keyframes explodeHeart {
+  from {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 1;
+  }
+  to {
+    transform:
+      translate(
+        calc(-50% + var(--x)),
+        calc(-50% + var(--y))
+      )
+      scale(1.5);
+    opacity: 0;
+  }
+}
+
+
+</style>
+</head>
+
+<body>
+
+<!-- 🔒 PASSWORD -->
+<div id="lockScreen">
+  <h2>Enter the password 💖</h2>
+  <input type="password" id="passwordInput" placeholder="Password">
+  <button onclick="unlock()">Unlock</button>
+</div>
+<!-- 🎵 Background Music -->
+<audio id="bgMusic" loop>
+  <source src="music.mpeg" type="audio/mpeg">
+</audio>
+
+
+
+
+<!-- 🎵 MUSIC -->
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_21e5d44d1c.mp3">
+</audio>
+
+<!-- ❤️ MAIN CONTENT -->
+<div class="main" id="main">
+  <div class="card">
+
+    <!-- 🖼️ SLIDESHOW -->
+    <div class="slideshow">
+      <img src="photos/photo1.jpeg" class="slide active">
+      <img src="photos/photo2.jpeg" class="slide">
+      <img src="photos/photo3.jpeg" class="slide">
+      <img src="photos/photo4.jpeg" class="slide">
+    </div>
+
+    <h1>My Dearest Ashlesha ❤️</h1>
+    <p>Will you be mine forever? 💍</p>
+
+    <div class="buttons">
+      <button id="yesBtn">Yes 💖</button>
+      <button id="noBtn">No 🙈</button>
+    </div>
+
+    <div id="result"></div>
+  </div>
+</div>
+
+<script>
+/* ===== EMAILJS ===== */
+emailjs.init("UVl_PzJzUgj-j00z9");
+
+const SERVICE_ID = "service_05ovrta";
+const TEMPLATE_ID = "template_abbdtak";
+
+function unlock() {
+  const enteredPassword = document.getElementById("passwordInput").value;
+  const music = document.getElementById("bgMusic");
+
+
+  if (enteredPassword === "2504") {
+    lockScreen.style.display = "none";
+    main.style.display = "flex";
+
+    // 🎬 AUTO FULLSCREEN
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    } else if (document.documentElement.webkitRequestFullscreen) {
+      document.documentElement.webkitRequestFullscreen();
+    } else if (document.documentElement.msRequestFullscreen) {
+      document.documentElement.msRequestFullscreen();
+    }
+    music.volume = 0.6; // adjust volume (0.0 – 1.0)
+    music.play().catch(() => {
+      console.log("Autoplay blocked, user interaction needed");
+    });
+  } else {
+    alert("❌ Incorrect password 💔");
+    document.getElementById("passwordInput").value = "";
+  }
+}
+
+/* ===== YES / NO ===== */
+yesBtn.onclick = () => {
+  result.innerHTML = "You said YES! I love you so much ❤️";
+  document.querySelector(".buttons").style.display = "none";
+  sendEmail("YES ❤️");
+  fireworks();
+  heartExplosion(); // 💥❤️ HEART BLAST
+
+  // 🎊 Confetti burst
+  for (let i = 0; i < 150; i++) {
+    const confetti = document.createElement("div");
+    confetti.className = "confetti";
+    confetti.style.left = Math.random() * 100 + "vw";
+    confetti.style.background =
+      `hsl(${Math.random() * 360}, 100%, 60%)`;
+    confetti.style.animationDelay = Math.random() * 2 + "s";
+    document.body.appendChild(confetti);
+
+    setTimeout(() => confetti.remove(), 3000);
+  }
+   setTimeout(freezeMoment, 2000);
+};
+
+
+noBtn.onmouseover = () => {
+  noBtn.style.transform =
+    `translate(${Math.random()*200-100}px, ${Math.random()*200-100}px)`;
+};
+
+/* ===== EMAIL ===== */
+function sendEmail(answer) {
+  emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+    message: answer
+  });
+}
+
+/* ===== SLIDESHOW ===== */
+let slides = document.querySelectorAll(".slide");
+let index = 0;
+
+setInterval(() => {
+  slides[index].classList.remove("active");
+  index = (index + 1) % slides.length;
+  slides[index].classList.add("active");
+}, 3000);
+
+/* ===== HEARTS ===== */
+setInterval(() => {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerHTML = "❤️";
+  h.style.left = Math.random() * 100 + "vw";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 6000);
+}, 400);
+
+/* ===== FIREWORKS ===== */
+function fireworks() {
+  setInterval(() => {
+    const f = document.createElement("div");
+    f.className = "firework";
+    f.style.left = Math.random() * 100 + "vw";
+    f.style.top = Math.random() * 100 + "vh";
+    f.style.background = `hsl(${Math.random()*360},100%,60%)`;
+    document.body.appendChild(f);
+    setTimeout(() => f.remove(), 1000);
+  }, 200);
+}
+function heartExplosion() {
+  const hearts = 40; // number of hearts
+
+  for (let i = 0; i < hearts; i++) {
+    const heart = document.createElement("div");
+    heart.className = "explode-heart";
+    heart.innerHTML = "❤️";
+
+    const angle = Math.random() * 2 * Math.PI;
+    const distance = Math.random() * 200 + 50;
+
+    heart.style.setProperty("--x", `${Math.cos(angle) * distance}px`);
+    heart.style.setProperty("--y", `${Math.sin(angle) * distance}px`);
+    heart.style.fontSize = Math.random() * 15 + 18 + "px";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 1800);
+  }
+}
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
